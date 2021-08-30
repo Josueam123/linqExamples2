@@ -29,63 +29,64 @@ namespace linqExamples2
                 // los que tienen menos son 10 -6 - 7
                 new Factura{
                     observacion = "ProbCompra 1 productos", 
-										idCliente = 10, 
-										fecha=Convert.ToDateTime("05/09/2021"), 
-										total = 1.5m
+
+					idCliente = 10, 
+					fecha=Convert.ToDateTime("05/09/2021"), 
+					total = 1.5m
                     },
                 new Factura{
                     observacion = "Compra 2 productos", 
-										idCliente = 6, 
-										fecha=Convert.ToDateTime("05/10/2020"), 
-										total = 2.5m
+					idCliente = 6, 
+					fecha=Convert.ToDateTime("05/10/2020"), 
+					total = 2.5m
                     },
                 new Factura{
                     observacion = "Compra 3 productos", 
-										idCliente = 10, 
-										fecha=Convert.ToDateTime("05/02/2021"), 
-										total = 3.5m
+					idCliente = 10, 
+					fecha=Convert.ToDateTime("05/02/2021"), 
+				    total = 3.5m
                     },
                 new Factura{
                     observacion = "ProbCompra 4 productos", 
-										idCliente = 7, 
-										fecha=Convert.ToDateTime("05/05/2012"), 
-										total = 4.5m
+					idCliente = 7, 
+					fecha=Convert.ToDateTime("05/05/2012"), 
+				    total = 4.5m
                     },
                 new Factura{
                     observacion = "Compra 5 productos", 
-										idCliente = 9, 
-										fecha=Convert.ToDateTime("05/12/2021"), 
-										total = 5.5m
+					idCliente = 9, 
+					fecha=Convert.ToDateTime("05/12/2021"), 
+					total = 5.5m
                     },
                 new Factura{
                     observacion = "Compra 6 productos", 
-										idCliente = 5, 
-										fecha=Convert.ToDateTime("05/05/2010"), 
-										total = 6.5m
+					idCliente = 5, 
+					fecha=Convert.ToDateTime("05/05/2010"), 
+					total = 6.5m
                     },
                 new Factura{
                     observacion = "ProbCompra 7 productos", 
-										idCliente = 9, 
-										fecha=Convert.ToDateTime("05/05/2005"), 
-										total = 7.5m
+					idCliente = 9, 
+					fecha=Convert.ToDateTime("05/05/2005"), 
+					total = 7.5m
                     },
                 new Factura{
                     observacion = "Compra 8 productos", 
-										idCliente = 9, 
-										fecha=Convert.ToDateTime("05/12/2008"), 
-										total = 8.5m
+					idCliente = 9, 
+				    fecha=Convert.ToDateTime("05/12/2008"), 
+					total = 8.5m
                     },
                 new Factura{
                     observacion = "Compra 9 productos", 
-										idCliente = 2, 
-										fecha=Convert.ToDateTime("05/08/2020"), 
-										total = 9.5m
+					idCliente = 2, 
+					fecha=Convert.ToDateTime("05/08/2020"), 
+					total = 9.5m
                     },
                 new Factura{
                     observacion = "Compra 10 productos", 
-										idCliente = 1, 
-										fecha=Convert.ToDateTime("05/05/2009"), 
-										total = 10.5m
+					idCliente = 1, 
+					fecha=Convert.ToDateTime("05/05/2009"), 
+				    total = 10.5m
                     }
 			};
 
@@ -143,17 +144,18 @@ namespace linqExamples2
 		static void masMontoVentas(List<Factura> facturas, List<Cliente> clientes){
 			Console.WriteLine("Los 3 clientes con mas monto en ventas: ");
 			var listaClientes = facturas.
-						OrderByDescending(factura => factura.total)
-						.Take(3)
-						.Join(clientes,
-								factura => factura.idCliente,
-								cliente => cliente.idCliente,
-								(factura, cliente) =>
-									new 
-									{ 
-                    idClienteFactura = factura.idCliente, 
-                    nombreCliente = cliente.nombre 
-									});
+				OrderByDescending(factura => factura.total)
+				.Take(3)
+				.Join(clientes,
+				factura => factura.idCliente,
+				cliente => cliente.idCliente,
+				(factura, cliente) =>
+			    new
+				{ 
+
+                idClienteFactura = factura.idCliente, 
+                nombreCliente = cliente.nombre 
+			});
 
 			foreach(var actual in listaClientes){
 				Console.WriteLine("Cliente id: {0}", actual.idClienteFactura);
@@ -168,21 +170,22 @@ namespace linqExamples2
     static void menosMontoVentas(List<Factura> facturas, List<Cliente> clientes){
       Console.WriteLine("Los 3 clientes con menos monto en ventas: ");
 			IEnumerable<IGrouping<int, decimal>> grupoMontos = facturas
-																				.GroupBy(id => id.idCliente, total => total.total)
-                        								.OrderBy(total => total.Sum())
-                        								.Take(3);
+			.GroupBy(id => id.idCliente, total => total.total)
+            .OrderBy(total => total.Sum())
+            .Take(3);
 		
 			foreach(IGrouping<int, decimal> grupo in grupoMontos){
 				var listaClientes = grupo.Join(clientes,
-                                        id => grupo.Key,
-																				idNombre => idNombre.idCliente,
-																				(factura, cliente) => 
-                          							new
-																				{
-                          							  idFactura = grupo.Key,
-                          							  nombreCli = cliente.nombre,
-                          							  totalMonto = grupo.Sum()
-																				});
+                    id => grupo.Key,
+			        idNombre => idNombre.idCliente,
+			        (factura, cliente) => 
+                    new
+
+					{
+						idFactura = grupo.Key,
+						nombreCli = cliente.nombre,
+						totalMonto = grupo.Sum()
+			        }); 																	                          
 
         foreach(var seleccionado in listaClientes){
 					Console.WriteLine("Id cliente: {0}", seleccionado.idFactura);
@@ -205,8 +208,8 @@ namespace linqExamples2
     private static void clienteConMasVentas(List<Factura> facturas, List<Cliente> clientes)
 		{
 			IEnumerable<IGrouping<int, decimal>> grupoMontos = facturas
-																					.GroupBy(id => id.idCliente, total => total.total)
-																					.OrderBy(total => total.Sum());
+			.GroupBy(id => id.idCliente, total => total.total)
+			.OrderBy(total => total.Sum());
 			
 			// descomentar para obtner el valor maximo de ventas
 			//var max = grupoMontos.Max(grupo => grupo.Sum());
@@ -216,9 +219,10 @@ namespace linqExamples2
 
 			// recorrer la lista de clientes donde el ID del ultimo grupo sea igual al ID del cliente
 			var seleccionado = clientes
-															.Where(cliente => cliente.idCliente == ultimoGrupo.Key)
-															.Select(cliente => cliente)
-															.FirstOrDefault();
+				
+				.Where(cliente => cliente.idCliente == ultimoGrupo.Key)
+				.Select(cliente => cliente)
+				.FirstOrDefault();
 
 			Console.WriteLine("ID: {0}", seleccionado.idCliente);
 			Console.WriteLine("Nombre: {0}", seleccionado.nombre);
@@ -230,22 +234,24 @@ namespace linqExamples2
 		private static void clienteYVentasRealizadas(List<Factura> facturas, List<Cliente> clientes)
 		{
 			IEnumerable<IGrouping<int, decimal>> grupoMontos = facturas
-																						.GroupBy(id => id.idCliente, total => total.total)
-																						.OrderBy(id => id.Key);
+				.GroupBy(id => id.idCliente, total => total.total)
+				.OrderBy(id => id.Key);
 
 			// recorrer cada grupo
 			foreach(IGrouping<int, decimal> grupo in grupoMontos){
 				//unir cada grupo con la lista de clientes donde los ID sean iguales
 				var listaClientes = grupo.Join(clientes,
-																				idFactura => grupo.Key,
-																				idCliente => idCliente.idCliente,
-																				(factura, cliente) => 
-																				// crear nuevas propiedades resultado de la union
-																				new {
-																					idCliente = grupo.Key,
-																					nombreCliente = cliente.nombre,
-																					montoTotal = grupo.Sum()
-																				});
+
+					idFactura => grupo.Key,
+					idCliente => idCliente.idCliente,
+					(factura, cliente) => 
+					// crear nuevas propiedades resultado de la union
+					new {
+					idCliente = grupo.Key,
+					nombreCliente = cliente.nombre,
+					montoTotal = grupo.Sum()
+
+					});
 				// recorrer la nueva lista accediendo a las nuevas propiedades
 				foreach(var seleccionado in listaClientes){
 					Console.WriteLine("ID: {0}", seleccionado.idCliente);
@@ -262,8 +268,9 @@ namespace linqExamples2
 			// creando una nueva lista de la lista facturas donde cada año sea mayor que la fecha actual
 			// restado un año 
 			IEnumerable<Factura> ventasRecientes = facturas
-													.Where(factura => factura.fecha > (DateTime.Today.AddYears(-1)))
-													.Select(date => date);
+
+				.Where(factura => factura.fecha > (DateTime.Today.AddYears(-1)))
+				.Select(date => date);
 
 			// recorrer la lista con que cumplan con la condicion 
 			foreach(Factura actual in ventasRecientes){
@@ -279,9 +286,9 @@ namespace linqExamples2
 			// tomar los 5 primeros elementos
 			// nuevnamente ordenar los 5 elementos descentemente por la fecha
 			IEnumerable<Factura> grupoFechas = facturas
-																							.OrderBy(date => date.fecha)
-																							.Take(5)
-																							.OrderByDescending(date => date.fecha);
+				.OrderBy(date => date.fecha)
+				.Take(5)
+				.OrderByDescending(date => date.fecha);
 
 			// recorrer la lista con los elementos seleccionados y imprimir sus propiedades
 			foreach(Factura actual in grupoFechas){
@@ -298,23 +305,24 @@ namespace linqExamples2
 			// y nos retorna un grupo con las observaciones de cada grupo, 
 			// ordenarlos
 			IEnumerable<IGrouping<int, string>> grupoClientes = facturas
-																					.GroupBy(id => id.idCliente, factura => factura.observacion)
-																					.OrderBy(id => id.Key);
+				.GroupBy(id => id.idCliente, factura => factura.observacion)
+				.OrderBy(id => id.Key);
 
 			// unir cada grupo con los ID que coincidan de la lista de clientes 
 
 			foreach(IGrouping<int, string> grupo in grupoClientes){
 				var listaClientes = grupo.Join(clientes,
-																		id => grupo.Key,
-																		idCliente => idCliente.idCliente,
-																		(factura, cliente) =>
-																		// crear nuevas propiedades a partir de esta union
-																		new {
-																			idCliente = grupo.Key,
-																			nombreCliente = cliente.nombre,
-																			observacionCompra = factura
-																		})
-																		// seleccionar los elementos de cada grupo que inicie con  Prob
+					
+					id => grupo.Key,
+					idCliente => idCliente.idCliente,
+					(factura, cliente) =>
+					// crear nuevas propiedades a partir de esta union
+					new {
+					idCliente = grupo.Key,
+					nombreCliente = cliente.nombre,
+					observacionCompra = factura
+					})
+					// seleccionar los elementos de cada grupo que inicie con  Prob
 																		.Where(observacion => observacion.observacionCompra.StartsWith("Prob"))
 																		.Select(observacion => observacion);
 
