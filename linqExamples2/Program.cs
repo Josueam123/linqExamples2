@@ -323,8 +323,8 @@ namespace linqExamples2
 					observacionCompra = factura
 					})
 					// seleccionar los elementos de cada grupo que inicie con  Prob
-																		.Where(observacion => observacion.observacionCompra.StartsWith("Prob"))
-																		.Select(observacion => observacion);
+					.Where(observacion => observacion.observacionCompra.StartsWith("Prob"))
+					.Select(observacion => observacion);
 
 				// recoorer la nueva lista accediendo a las nuevas propiedades
 				foreach(var seleccionado in listaClientes){
